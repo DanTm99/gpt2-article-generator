@@ -105,7 +105,7 @@ class Gui:
         words_per_sample_label.grid(row=3, column=0, padx=self.HOME_PAD_X, pady=self.HOME_PAD_Y, sticky=tk.W)
         # Spinbox
         self.words_per_sample = tk.IntVar(value=1023)
-        words_per_sample_spinbox = tk.Spinbox(self.home, from_=1, to=99999, width=9, textvariable=self.words_per_sample)
+        words_per_sample_spinbox = tk.Spinbox(self.home, from_=1, to=1023, width=9, textvariable=self.words_per_sample)
         words_per_sample_spinbox.grid(row=3, column=1, columnspan=2, padx=self.HOME_PAD_X, pady=self.HOME_PAD_Y,
                                       sticky=tk.W)
 
@@ -136,34 +136,21 @@ class Gui:
 
         try:
             words_per_sample = int(self.words_per_sample.get())
-            assert words_per_sample > 0
+            assert (words_per_sample > 0) and (words_per_sample < 1024)
         except (ValueError, AssertionError):
-            messagebox.showerror('Invalid Value', 'Words per sample must be a positive number.')
+            messagebox.showerror('Invalid Value', 'Words per sample must be a whole number between 1 and 1023.')
             return
 
-        # row_number = 5
-        #
-        # text = tk.StringVar()
-        # first_label = tk.Label(self.home, textvariable=text, wraplength=500)
-        # first_label.grid(row=row_number, column=2)
+        title = self.title_text.get('1.0', tk.END).rstrip()
+        if len(title) == 0:
+            messagebox.showerror('Invalid Title', 'Title must not be blank.')
+            return
 
-        title = self.title_text.get('1.0', tk.END)
         initial_content = self.initial_content_text.get('1.0', tk.END)
 
-        # plural = 's' if number_of_samples > 1 else ''
-        #
-        # text.set(f'Generating sample{plural}. This may take a while.')
         samples = Generator.get_instance().generate_as_tuple(title, initial_content, number_of_samples,
                                                              words_per_sample)
-        # first_content = samples[0][1]
-        #
-        # text.set(f'{title}\n\n{first_content}')
-        #
-        # for sample in samples[1:]:
-        #     row_number += 1
-        #     content = sample[1]
-        #     label = tk.Label(self.home, text=f'\n\n{content}', wraplength=500)
-        #     label.grid(row=row_number, column=2)
+
         Gui.SampleViewer(samples)
 
     def on_title_option_menu_update(self, value):
