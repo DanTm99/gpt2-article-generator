@@ -109,22 +109,9 @@ class Gui:
         words_per_sample_spinbox.grid(row=3, column=1, columnspan=2, padx=self.HOME_PAD_X, pady=self.HOME_PAD_Y,
                                       sticky=tk.W)
 
-        # Help Button
-        help_button = tk.Button(self.home, text='Help', command=self.help)
-        help_button.grid(row=4, column=0, padx=self.HOME_PAD_X, pady=self.HOME_PAD_Y)
-
         # Generate Button
         generate_button = tk.Button(self.home, text='Generate', command=self.submit)
         generate_button.grid(row=4, column=1, columnspan=2, padx=self.HOME_PAD_X, pady=self.HOME_PAD_Y)
-
-    def create_sample_viewer(self, samples):
-        self.sample_viewer = Gui.SampleViewer(samples)
-
-    def help(self):
-        messagebox.showinfo('Help', 'Type a title into the Title field and optionally some initial content in the'
-                                    'Initial Content field.\nSelect the number of samples you want to generate.\n'
-                                    'Then click the Generate button. This will generate an article that starts with'
-                                    'the specified initial content and has the specified title.')
 
     def submit(self):
         try:
