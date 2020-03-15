@@ -75,6 +75,8 @@ class Gui:
         # Text Entry
         self.title_text = tk.Text(self.home, width=50, height=1, font=("Helvetica", 10))
         self.title_text.grid(row=0, column=2, padx=self.HOME_PAD_X, pady=self.HOME_PAD_Y, sticky=tk.W)
+        # Do nothing when the user tries to enter a newline character
+        self.title_text.bind('<Return>', lambda x: 'break')
 
         # Initial Content
         # Label
