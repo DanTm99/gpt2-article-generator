@@ -166,7 +166,7 @@ class Gui:
             if filename:
                 with open(filename, 'r', errors='surrogateescape') as f:
                     title = f.readline().rstrip()
-
+                text_field.config(state='normal')
                 text_field.delete('1.0', tk.END)  # Clear the contents of the field
                 text_field.insert('1.0', title)
                 text_field.config(state='disabled')
