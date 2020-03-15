@@ -156,7 +156,8 @@ class Gui:
                 response = messagebox.askyesno('Continue?', 'This will overwrite the contents of the title field.\n'
                                                             'Would you like to continue?')
                 if not response:  # If the user responded with No
-                    option_menu.set('Text')  # Change the value back
+                    option_menu.set('Text')
+                    text_field.config(state='normal')
                     return
 
             filename = filedialog.askopenfilename(initialdir='/', title='Open',
@@ -168,10 +169,10 @@ class Gui:
 
                 text_field.delete('1.0', tk.END)  # Clear the contents of the field
                 text_field.insert('1.0', title)
-
                 text_field.config(state='disabled')
             else:  # If the user did not select a file
-                option_menu.set('Text')  # Change the value back
+                option_menu.set('Text')
+                text_field.config(state='normal')
 
     class SampleViewer:
         # Constants
