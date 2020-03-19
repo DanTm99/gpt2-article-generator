@@ -10,6 +10,16 @@ def positive_int_type(value):
     return i
 
 
+def bound_positive_int_type(value, max_value):
+    """Raise an error if the provided value is not a positive integer. Return it otherwise."""
+    i = int(value)
+    if i <= 0:
+        raise argparse.ArgumentTypeError(f'{value} is not a positive int.')
+    if i > max_value:
+        raise argparse.ArgumentTypeError(f'{value} is greater than than {max_value}.')
+    return i
+
+
 def existing_filename_type(value):
     """Raise an error if the provided value is not the name of an existing file. Return it otherwise."""
     if not os.path.isfile(value):
@@ -54,7 +64,8 @@ def create_parser():
                         help='Print the generated sample(s) to console.')
     parser.add_argument('-n', '--num_samples', dest='num_samples', default=1, type=positive_int_type,
                         help='Use the specified value to dictate how many samples are generated. Default: 1')
-    parser.add_argument('-w', '--num_words', dest='num_words', default=1023, type=positive_int_type,
+    parser.add_argument('-w', '--num_words', dest='num_words', default=1023,
+                        type=lambda i: bound_positive_int_type(i, 1023),
                         help='Use the specified value to dictate the maximum number of words in each sample. '
                              'Default: 1023')
     parser.add_argument('-t', '--title_filename', dest='title_filename', type=existing_filename_type,
