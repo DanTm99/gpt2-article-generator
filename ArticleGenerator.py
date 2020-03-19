@@ -37,7 +37,7 @@ def create_parser():
         USAGE:      python ArticleGenerator.py <options>
         EXAMPLES:   (1) python ArticleGenerator.py
                         - Opens the ArticleGenerator GUI
-                    (2) python ArticleGenerator.py -f example.txt -o sample.txt -n 5
+                    (2) python ArticleGenerator.py -f example.txt -o sample.txt -n 3
                     OR  python ArticleGenerator.py --filename example.txt --output-filename sample.txt --num_samples 3 
                         - Generates 3 articles with the title and initial content specified in \'example.txt\' and 
                         writes them to \'sample1.txt\', \'sample2.txt\', and \'sample3.txt\'.
