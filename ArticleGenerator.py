@@ -3,18 +3,23 @@ import os
 
 
 def positive_int_type(value):
-    """Raise an error if the provided value is not a positive integer. Return it otherwise."""
-    i = int(value)
-    if i <= 0:
+    """Raise an error if the value is not a positive integer. Return it otherwise."""
+    try:
+        i = int(value)
+        assert i > 0
+    except (ValueError, AssertionError):
         raise argparse.ArgumentTypeError(f'{value} is not a positive int.')
     return i
 
 
 def bound_positive_int_type(value, max_value):
-    """Raise an error if the provided value is not a positive integer. Return it otherwise."""
-    i = int(value)
-    if i <= 0:
+    """Raise an error if the value is not a positive integer and less than the max_value. Return it otherwise."""
+    try:
+        i = int(value)
+        assert i > 0
+    except (ValueError, AssertionError):
         raise argparse.ArgumentTypeError(f'{value} is not a positive int.')
+
     if i > max_value:
         raise argparse.ArgumentTypeError(f'{value} is greater than than {max_value}.')
     return i
