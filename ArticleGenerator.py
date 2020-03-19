@@ -99,3 +99,5 @@ if __name__ == '__main__':
                                 args.output_filename)
     elif args.title:
         gen.generate(args.title, args.content, args.num_samples, args.print, args.output_filename)
+    else:
+        raise Exception('Input filename, input title filename, or input title have been set.')
