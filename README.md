@@ -6,7 +6,7 @@ An application to allow for generating news articles using [OpenAI](https://open
 
 The model this program uses is hosted on Google Drive and can be downloaded from [here](https://drive.google.com/open?id=1Lmh7JBRkbC0jEvGtoZwVL30PT8PIt9qm). The `checkpoint` folder inside this archive should be extracted to the `gpt2-article-generator` folder.
 
-After you install git-lfs the repository can be cloned as normal:
+The repository can be cloned as normal:
 ```shell
 git clone https://github.com/DanTm99/gpt2-article-generator.git
 ```
