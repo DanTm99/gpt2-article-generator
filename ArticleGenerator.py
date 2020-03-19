@@ -89,9 +89,9 @@ if __name__ == '__main__':
     if is_default_args(args):
         gen.launch_gui()
     elif not args.output_filename and not args.print:
-        raise argparse.ArgumentError('Output has not been set to either console or an output file.')
+        raise Exception('Output has not been set to either console or an output file.')
     elif args.output_filename and args.output_filename in [args.filename, args.title_filename, args.content_filename]:
-        raise argparse.ArgumentError('Output filename cannot be the same as an input filename.')
+        raise Exception('Output filename cannot be the same as an input filename.')
     elif args.filename:
         gen.generate_from_single_file(args.filename, args.num_samples, args.print, args.output_filename)
     elif args.title_filename:
