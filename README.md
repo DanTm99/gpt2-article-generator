@@ -4,7 +4,7 @@ An application to allow for generating news articles using [OpenAI](https://open
 
 ## Setup
 
-This project uses [git-lfs](https://git-lfs.github.com/) due to the size of the model. Because of this you must install it before cloning the repository.
+The model this project uses is hosted on Google Drive and can be downloaded from [here](https://drive.google.com/open?id=1Lmh7JBRkbC0jEvGtoZwVL30PT8PIt9qm). The `checkpoint` folder inside this archive should be extracted to the `gpt2-project` folder.
 
 After you install git-lfs the repository can be cloned as normal:
 ```shell
