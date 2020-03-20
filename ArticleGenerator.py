@@ -89,10 +89,10 @@ def create_parser():
                              'content. This will be ignored if no filename for \'--title-filename\' is specified.')
     parser.add_argument('-T', '--title', dest='title',
                         help='Use the text specified by TITLE as the title. This will be ignored if a filename '
-                             'for \'filename\' or \'--title_filename\' is specified.')
+                             'for \'--filename\' or \'--title_filename\' is specified.')
     parser.add_argument('-C', '--content', dest='content',
                         help='Use the text specified by CONTENT as the initial content. This will be ignored if '
-                             'no title for \'title\' is specified.')
+                             'no title for \'--title\' is specified.')
     return parser
 
 
