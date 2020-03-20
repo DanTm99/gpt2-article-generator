@@ -50,42 +50,49 @@ def create_parser():
     """Create and return a parser with a usage string and all the arguments this program can take."""
     usage_str = """
         USAGE:      python ArticleGenerator.py <options>
+                    NOTE: The order of the options does not matter.
         EXAMPLES:   (1) python ArticleGenerator.py
-                        - Opens the ArticleGenerator GUI
+                        - Open the ArticleGenerator GUI
                     (2) python ArticleGenerator.py -f example.txt -o sample.txt -n 3
                     OR  python ArticleGenerator.py --filename example.txt --output-filename sample.txt --num_samples 3 
-                        - Generates 3 articles with the title and initial content specified in \'example.txt\' and 
-                        writes them to \'sample1.txt\', \'sample2.txt\', and \'sample3.txt\'.
+                        - Generate 3 articles with the title and initial content specified in \'example.txt\' and 
+                        write each of them to \'sample1.txt\', \'sample2.txt\', and \'sample3.txt\' respectively.
+                    (3) python ArticleGenerator.py -T 'Example title' -C 'Example content' -p
+                    OR  python ArticleGenerator.py -title 'Example title' -content 'Example content' -print
+                        - Generate 1 article with the title being 'Example title' and the content being 
+                        'Example content' and print it to the console.
         """
     parser = argparse.ArgumentParser(usage_str)
     parser.add_argument('-f', '--filename', dest='filename', type=existing_filename_type,
-                        help='Use the title and initial content in a file with the specified filename, containing the '
-                             'title in the first line and initial content (if any) in the second line.')
+                        help='Use the title and initial content in a file with the filename specified by FILENAME. '
+                             'The file should contain the title in the first line, and initial content (if any) in the '
+                             'second line.')
     parser.add_argument('-o', '--output_filename', dest='output_filename',
                         type=not_existing_filename_type,
-                        help='Write the generated sample to a new file with the specified filename. The sample number '
-                             'is appended to the filename before the extension if multiple samples are generated.')
+                        help='Write the generated sample to a new file with the filename specified by OUTPUT_FILENAME. '
+                             'The file must not already exist. The sample number is appended to the filename before '
+                             'the extension if multiple samples are to be generated.')
     parser.add_argument('-p', '--print', dest='print', action='store_true',
                         help='Print the generated sample(s) to console.')
     parser.add_argument('-n', '--num_samples', dest='num_samples', default=1, type=positive_int_type,
-                        help='Use the specified value to dictate how many samples are generated. Default: 1')
+                        help='Generate a number of samples equal to NUM_SAMPLES. It must be a positive integer. '
+                             'Default: 1')
     parser.add_argument('-w', '--num_words', dest='num_words', default=1023,
                         type=lambda i: bound_positive_int_type(i, 1023),
-                        help='Use the specified value to dictate the maximum number of words in each sample. '
-                             'Default: 1023')
+                        help='Generate samples with a number of words that is not greater than NUM_WORDS. It must be a '
+                             'positive integer that does not exceed 1023. Default: 1023')
     parser.add_argument('-t', '--title_filename', dest='title_filename', type=existing_filename_type,
-                        help='Use the title in a file with the specified filename, containing the title in the first '
-                             'line. This will be ignored if a filename for \'--filename\' is specified.')
+                        help='Use the text in the first line of the file specified by TITLE_FILENAME as the title. '
+                             'This will be ignored if a filename for \'--filename\' is specified.')
     parser.add_argument('-c', '--content_filename', dest='content_filename', type=existing_filename_type,
-                        help='Use the initial content in a file with the specified filename, containing the initial '
-                             'content in the first line. This will be ignored if no filename for \'--title-filename\' '
-                             'is specified.')
+                        help='Use the text in the first line of the file specified by CONTENT_FILENAME as the initial '
+                             'content. This will be ignored if no filename for \'--title-filename\' is specified.')
     parser.add_argument('-T', '--title', dest='title',
-                        help='Use the specified title. This will be ignored if a filename for \'filename\' or '
-                             '\'--title_filename\' is specified.')
+                        help='Use the text specified by TITLE as the title. This will be ignored if a filename '
+                             'for \'filename\' or \'--title_filename\' is specified.')
     parser.add_argument('-C', '--content', dest='content',
-                        help='Use the specified initial content. This will be ignored if no title for \'title\' is '
-                             'specified.')
+                        help='Use the text specified by CONTENT as the initial content. This will be ignored if '
+                             'no title for \'title\' is specified.')
     return parser
 
 
