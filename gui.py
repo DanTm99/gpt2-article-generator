@@ -200,7 +200,6 @@ class Gui:
             self.window = tk.Toplevel()
             self.window.title(self.title)
             self.window.resizable(False, False)
-            # self.window.minsize(width=self.MIN_WINDOW_WIDTH, height=self.MIN_WINDOW_HEIGHT)
             self.window.grab_set()
 
             self.create_buttons()
@@ -253,11 +252,12 @@ class Gui:
             self.sample_text.configure(state='disabled')
 
         def update_buttons(self):
-            self.left_button.config(state='normal')
-            self.right_button.config(state='normal')
-
             if self.current_sample_index == 0:
                 self.left_button.config(state='disabled')
+            else:
+                self.left_button.config(state='normal')
 
             if self.current_sample_index == (len(self.samples) - 1):
                 self.right_button.config(state='disabled')
+            else:
+                self.right_button.config(state='normal')
