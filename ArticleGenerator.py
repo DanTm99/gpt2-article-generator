@@ -113,15 +113,15 @@ if __name__ == '__main__':
         gen.launch_gui()
     elif not args.output_filename and not args.print:
         raise Exception('Output has not been set to either console or an output file.\nUse the -h argument for help.')
-    elif args.output_filename and args.output_filename in [args.filename, args.title_filename, args.content_filename]:
+    elif args.output_filename and (args.output_filename in [args.filename, args.title_filename, args.content_filename]):
         raise Exception('Output filename cannot be the same as an input filename.\nUse the -h argument for help.')
     elif args.filename:
-        gen.generate_from_single_file(args.filename, args.num_samples, args.print, args.output_filename)
+        gen.generate_from_single_file(args.filename, args.num_samples, args.print, args.output_filename, args.num_words)
     elif args.title_filename:
         gen.generate_from_files(args.title_filename, args.content_filename, args.num_samples, args.print,
-                                args.output_filename)
+                                args.output_filename, args.num_words)
     elif args.title:
-        gen.generate(args.title, args.content, args.num_samples, args.print, args.output_filename)
+        gen.generate(args.title, args.content, args.num_samples, args.print, args.output_filename, args.num_words)
     else:
         raise Exception('Input filename, input title filename, or input title have been set.\n'
                         'Use the -h argument for help.')
