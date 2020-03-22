@@ -133,7 +133,7 @@ class Gui:
             messagebox.showerror('Invalid Title', 'Title must not be blank.')
             return
 
-        initial_content = self.initial_content_text.get('1.0', tk.END)
+        initial_content = self.initial_content_text.get('1.0', tk.END).rstrip()
 
         samples = Generator.get_instance().generate_as_tuple(title, initial_content, number_of_samples,
                                                              words_per_sample)
