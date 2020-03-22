@@ -151,8 +151,8 @@ class Gui:
             text_field.config(state='normal')
         else:
             if len(text_field.get('1.0', tk.END)) > 1:
-                response = messagebox.askyesno('Continue?', 'This will overwrite the contents of the title field.\n'
-                                                            'Would you like to continue?')
+                response = messagebox.askyesno('Continue?', 'The content of the file will overwrite the contents of the'
+                                                            ' field.\nWould you like to continue?')
                 if not response:  # If the user responded with No
                     option_menu.set('Text')
                     text_field.config(state='normal')
