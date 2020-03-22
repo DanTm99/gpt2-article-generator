@@ -44,8 +44,6 @@ class Gui:
 
         self.create_gui()
 
-        self.root.mainloop()
-
     def start(self):
         self.root.mainloop()
 
