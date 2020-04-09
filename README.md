@@ -4,7 +4,7 @@ An application to allow for generating news articles using [OpenAI](https://open
 
 ## Setup
 
-The model this program uses is hosted on Google Drive and can be downloaded from [here](https://drive.google.com/open?id=1Lmh7JBRkbC0jEvGtoZwVL30PT8PIt9qm). The `checkpoint` folder inside this archive should be extracted to the `gpt2-article-generator` folder.
+The model this program uses is hosted on Google Drive and can be downloaded from [here](https://drive.google.com/open?id=1Lmh7JBRkbC0jEvGtoZwVL30PT8PIt9qm). The contents of this archive should be extracted to the `gpt2-article-generator` folder so that the `checkpoint` is in the `gpt2-article-generator` folder.
 
 The repository can be cloned as normal:
 
