@@ -21,6 +21,8 @@ class Generator:
         else:
             raise Exception("Attempted initialisation of singleton class Gui.")
 
+        Gpt2Handler.get_instance()  # Create instance of Gpt2Handler
+
     @staticmethod
     def launch_gui():
         """Get the instance of the GUI and start it."""
