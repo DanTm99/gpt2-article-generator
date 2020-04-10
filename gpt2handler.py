@@ -63,9 +63,8 @@ class Gpt2Handler:
         """Load the gpt2 model. If it has already been loaded, reset it first."""
         try:
             gpt2.load_gpt2(self.sess, run_name=self.run_name)
-        except ValueError:
-            sess = gpt2.reset_session(self.sess)
-            gpt2.load_gpt2(sess, run_name=self.run_name)
+        except FileNotFoundError:
+            raise Exception(f'Model is missing. Place \'{self.run_name}\' in the checkpoint folder and try again.')
 
     def generate(self, title, initial_content='', num_samples=1, num_words=1023):
         """Generate a sample with the specified title and initial content."""
