@@ -15,7 +15,7 @@ The model this program uses is hosted on Google Drive and can be downloaded from
 Navigate into the folder:
 
 ```shell
-cd gpt2-bot
+cd gpt2-article-generator
 ```
 
 To use this with your GPU you must have and NVIDIA GPU with a CUDA Compute Capability 3.5 or higher.

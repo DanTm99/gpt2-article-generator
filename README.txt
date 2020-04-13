@@ -12,7 +12,7 @@ The model this program uses is hosted separately on Google Drive and can be down
 The contents of this archive should be extracted to the "gpt2-article-generator" folder so that the "checkpoint" is in the "gpt2-article-generator" folder.
 
 Navigate into the folder using this command:
-cd gpt2-bot
+cd gpt2-article-generator
 
 To use this with your GPU you must have and NVIDIA GPU with a CUDA Compute Capability 3.5 or higher.
 If you have the required hardware you must install the required software on your system as shown here: https://www.tensorflow.org/install/gpu#software_requirements
