@@ -40,6 +40,8 @@ class Generator:
                                   print_output=False,
                                   output_file=None,
                                   num_words=1023):
+        """Read the title and initial content from a single file then use gpt2 to generate an article
+        and return it as a single string."""
         with open(input_filename, 'r', errors='surrogateescape') as f:
             file_contents = f.readlines()
 
@@ -55,6 +57,8 @@ class Generator:
                             print_output=False,
                             output_file=None,
                             num_words=1023):
+        """Read the title from a file and initial content from another file then use gpt2 to generate an article
+        and return it as a single string."""
         with open(title_filename, 'r', errors='surrogateescape') as title_file:
             title = title_file.readline().rstrip()
 
@@ -73,20 +77,22 @@ class Generator:
                  print_output=False,
                  output_file=None,
                  num_words=1023):
+        """Use gpt2 to generate an article based on a given title and initial content."""
         if not initial_content:
             initial_content = ''
         samples = Gpt2Handler.get_instance().generate_as_tuple(title, initial_content, num_samples, num_words)
         samples_str = [sample[0] + '\n' + sample[1] for sample in samples]
 
-        if print_output:
+        if print_output:  # Print each article to the console is specified to
             for sample in samples_str:
                 print(sample)
-        if output_file:
+        if output_file:  # Write each of the samples to their own file if a base filename is specified
             self.write_samples_to_file(output_file, samples_str)
 
         return samples_str
 
     def write_samples_to_file(self, filename, samples):
+        """Write the given samples to a file. If there is more than one, write each to its own file."""
         if len(samples) == 1:
             self.write_sample_to_file(filename, samples[0])
         else:
@@ -96,5 +102,6 @@ class Generator:
                 self.write_sample_to_file(new_filename, samples[i])
 
     def write_sample_to_file(self, filename, sample):
+        """Write a given sample to a file specified by te filename."""
         with open(filename, 'w+', errors='surrogateescape', encoding='utf-8') as f:
             f.write(sample)

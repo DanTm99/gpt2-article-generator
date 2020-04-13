@@ -42,7 +42,7 @@ class Gpt2Handler:
         return cls.__instance
 
     def __init__(self):
-        """Initialise a Generator instance if there is none. For internal use only."""
+        """Initialise a Gpt2Handler instance if there is none. For internal use only."""
         if Gpt2Handler.__instance is None:
             Gpt2Handler.__instance = self
         else:

@@ -6,7 +6,7 @@ from generator import Generator
 
 
 class Gui:
-    """This class respects the singleton design pattern and handles the GUI."""
+    """This class respects the singleton design pattern and is responsible for the GUI of the program."""
     __instance = None
 
     # Constants
@@ -25,12 +25,13 @@ class Gui:
         return cls.__instance
 
     def __init__(self):
-        """Initialise a Generator instance if there is none. For internal use only."""
+        """Initialise a Gui instance if there is none. For internal use only."""
         if Gui.__instance is None:
             Gui.__instance = self
         else:
             raise Exception("Attempted initialisation of singleton class Gui.")
 
+        # Initialise the instance variables for this object
         self.root = None
 
         # Home
@@ -45,9 +46,11 @@ class Gui:
         self.create_gui()
 
     def start(self):
+        """Launch the gui window."""
         self.root.mainloop()
 
     def create_gui(self):
+        """Create the gui window and populate it with the relevant components."""
         # Window
         self.root = tk.Tk()
         self.root.title("Article Generator")
@@ -57,6 +60,7 @@ class Gui:
         self.create_home()
 
     def create_home(self):
+        """Create the home screen and populate it with the relevant components."""
         self.home = tk.LabelFrame(self.root, padx=self.ROOT_PAD_X, pady=self.ROOT_PAD_Y, borderwidth=0,
                                   highlightthickness=0)
         self.home.pack()
@@ -114,39 +118,49 @@ class Gui:
         generate_button.grid(row=4, column=1, columnspan=2, padx=self.HOME_PAD_X, pady=self.HOME_PAD_Y)
 
     def submit(self):
+        """Submit the text in the fields to gpt2 and launch a window displaying the generated articles."""
         try:
-            number_of_samples = int(self.number_of_samples.get())
-            assert number_of_samples > 0
-        except (ValueError, AssertionError):
+            number_of_samples = int(self.number_of_samples.get())  # Ensure the number of samples is an int
+            assert number_of_samples > 0  # Ensure the number of samples is greater than 0
+        except (ValueError, AssertionError):  # Display a dialog box to the user to notify them of the error
             messagebox.showerror('Invalid Value', 'Number of samples must be a positive number.')
             return
 
         try:
-            words_per_sample = int(self.words_per_sample.get())
+            words_per_sample = int(self.words_per_sample.get())  # Ensure the words per sample is an int
+            # Ensure the words per sample is between 1 and 1023 (inclusive)
             assert (words_per_sample > 0) and (words_per_sample < 1024)
-        except (ValueError, AssertionError):
+        except (ValueError, AssertionError):  # Display a dialog box to the user to notify them of the error
             messagebox.showerror('Invalid Value', 'Words per sample must be a whole number between 1 and 1023.')
             return
 
-        title = self.title_text.get('1.0', tk.END).rstrip()
-        if len(title) == 0:
+        title = self.title_text.get('1.0', tk.END).rstrip()  # Retrieve the text from the title field
+        if len(title) == 0:  # Ensure text has be inputted in the title field
             messagebox.showerror('Invalid Title', 'Title must not be blank.')
             return
 
+        # Retrieve the text from the initial content field
         initial_content = self.initial_content_text.get('1.0', tk.END).rstrip()
 
+        # Generate samples based on the user input
         samples = Generator.get_instance().generate_as_tuple(title, initial_content, number_of_samples,
                                                              words_per_sample)
 
-        Gui.SampleViewer(samples)
+        # Display the generated samples
+        sample_viewer = Gui.SampleViewer(samples)
+        sample_viewer.start()
 
     def on_title_option_menu_update(self, value):
+        """Update the contents of the title text based on the respective option menu value."""
         self.on_option_menu_update(value, self.title_option, self.title_text)
 
     def on_initial_content_option_menu_update(self, value):
+        """Update the contents of the initial content text based on the respective option menu value."""
         self.on_option_menu_update(value, self.initial_content_option, self.initial_content_text)
 
     def on_option_menu_update(self, value, option_menu, text_field):
+        """Update the contents of the text field based on the new value of the option menu.
+        If 'File' is selected the user will be prompted to select a file to source the new text from."""
         if value == 'Text':
             text_field.config(state='normal')
         else:
@@ -173,6 +187,7 @@ class Gui:
                 text_field.config(state='normal')
 
     class SampleViewer:
+        """This inner class is responsible for displaying articles to the user."""
         # Constants
         WINDOW_PAD_X = 2
         WINDOW_PAD_Y = 2
@@ -180,6 +195,7 @@ class Gui:
         TEXT_FRAME_PAD_Y = 2
 
         def __init__(self, samples):
+            """Initialise the instance variables for this object, then create and populate the sample viewer window."""
             self.window = None
             self.left_button = None
 
@@ -194,9 +210,9 @@ class Gui:
             self.text_frame = None
 
             self.create_window()
-            self.window.mainloop()
 
         def create_window(self):
+            """Create and populate the sample viewer window."""
             self.window = tk.Toplevel()
             self.window.title(self.title)
             self.window.resizable(False, False)
@@ -209,6 +225,7 @@ class Gui:
             self.update_sample()
 
         def create_text_frame(self):
+            """Create and populate the frame responsible for displaying the text."""
             self.text_frame = tk.LabelFrame(self.window, borderwidth=0, highlightthickness=0)
             self.text_frame.grid(row=0, column=0, columnspan=2, padx=self.WINDOW_PAD_X, pady=self.WINDOW_PAD_Y)
 
@@ -224,12 +241,14 @@ class Gui:
             self.sample_text.grid(row=1, column=0)
 
         def create_buttons(self):
+            """Create the buttons and populate them in the relevant window."""
             self.left_button = tk.Button(self.window, text='<', command=self.previous_sample)
             self.left_button.grid(row=1, column=0, padx=self.WINDOW_PAD_X, pady=self.WINDOW_PAD_Y, sticky=tk.E)
             self.right_button = tk.Button(self.window, text='>', command=self.next_sample)
             self.right_button.grid(row=1, column=1, padx=self.WINDOW_PAD_X, pady=self.WINDOW_PAD_Y, sticky=tk.W)
 
         def previous_sample(self):
+            """Change the current sample displayed to the previous sample."""
             if self.current_sample_index == 0:
                 messagebox.showerror('Error', 'First sample reached. No previous sample exists.')
 
@@ -238,6 +257,7 @@ class Gui:
             self.update_buttons()
 
         def next_sample(self):
+            """Change the current sample displayed to the next sample."""
             if self.current_sample_index == (len(self.samples) - 1):
                 messagebox.showerror('Error', 'Last sample reached. No next sample exists.')
 
@@ -246,12 +266,14 @@ class Gui:
             self.update_buttons()
 
         def update_sample(self):
+            """Update the currently displayed sample to the currently selected sample."""
             self.sample_text.configure(state='normal')
             self.sample_text.delete("1.0", "end")
             self.sample_text.insert(tk.END, self.samples[self.current_sample_index])
             self.sample_text.configure(state='disabled')
 
         def update_buttons(self):
+            """Disable/enable the buttons depending on the relative position of the currently selected sample."""
             if self.current_sample_index == 0:
                 self.left_button.config(state='disabled')
             else:
@@ -261,3 +283,7 @@ class Gui:
                 self.right_button.config(state='disabled')
             else:
                 self.right_button.config(state='normal')
+
+        def start(self):
+            """Launch the gui window."""
+            self.window.mainloop()
